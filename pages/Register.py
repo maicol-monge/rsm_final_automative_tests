@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class RegisterPage:
     def __init__(self, driver):
         self.driver = driver
-        self.url = "https://localhost:7274/Users/Register"  # Update with your actual URL
+        self.url = "https://localhost:7274/Users/Register"
         self.full_name_input = (By.ID, "FullName")
         self.email_input = (By.ID, "Email")
         self.phone_input = (By.ID, "PhoneNumber")
@@ -37,11 +37,10 @@ class RegisterPage:
         self.driver.find_element(*self.confirm_password_input).send_keys(confirm_password)
 
     def accept_terms(self):
-        # This might need adjustment if the terms checkbox is not present
         try:
             self.driver.find_element(*self.terms_checkbox).click()
         except:
-            pass # Ignore if not found, as per the latest cshtml
+            pass
 
     def click_signup_button(self):
         button = self.driver.find_element(*self.signup_button)
@@ -58,6 +57,5 @@ class RegisterPage:
         }
         error_locator = field_error_map.get(field, self.email_error)
         wait = WebDriverWait(self.driver, timeout)
-        # Wait until element is visible (not just present in DOM)
         error_element = wait.until(EC.visibility_of_element_located(error_locator))
         return error_element.text.strip()

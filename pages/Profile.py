@@ -20,8 +20,7 @@ class ProfilePage:
         self.profile_picture_error = (By.CSS_SELECTOR, "span[data-valmsg-for='ProfilePictureURL']")
 
     def open_profile_page(self):
-        # This assumes the user is already logged in and navigates to the profile page.
-        # You might need to implement login steps before calling this.
+        
         self.driver.get(self.url)
 
     def enter_full_name(self, full_name):
@@ -30,14 +29,12 @@ class ProfilePage:
         element.send_keys(full_name)
 
     def upload_profile_picture(self, file_path):
-        # Create the file if it doesn't exist for the test
         if not os.path.exists(file_path):
             lower_file_path = file_path.lower()
             if lower_file_path.endswith(".pdf"):
                 with open(file_path, 'wb') as f:
                     f.write(b"%PDF-1.4\n%Dummy PDF content\n")
             else:
-                # 1x1 transparent PNG valid image bytes
                 png_base64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO7Z4ZkAAAAASUVORK5CYII="
                 with open(file_path, 'wb') as f:
                     f.write(base64.b64decode(png_base64))
@@ -61,7 +58,6 @@ class ProfilePage:
         try:
             return wait.until(lambda _: first_non_empty_text(self.success_message))
         except TimeoutException:
-            # Return server/client validation messages when present to aid assertions.
             profile_error_text = first_non_empty_text(self.profile_picture_error)
             if profile_error_text:
                 return profile_error_text
@@ -69,8 +65,7 @@ class ProfilePage:
             alert_error_text = first_non_empty_text(self.error_alert)
             if alert_error_text:
                 return alert_error_text
-
-            # Some implementations save and stay on Edit page without rendering .alert-success.
+            
             current_url = self.driver.current_url.lower()
             if "/profiles/edit" in current_url or "/users/dashboard" in current_url:
                 return "Your profile has been updated successfully!"

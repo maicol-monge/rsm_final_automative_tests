@@ -11,10 +11,9 @@ from pages.Dashboard import DashboardPage
 def test_dashboard_data_verification():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     
-    # Precondition: User is authenticated
     login_page = LoginPage(driver)
     login_page.open_login_page()
-    login_page.enter_email("test@example.com") # Use a valid, existing user
+    login_page.enter_email("test@example.com")
     login_page.enter_password("Password123!")
     login_page.click_login_button()
     
@@ -23,7 +22,6 @@ def test_dashboard_data_verification():
 
     dashboard_page = DashboardPage(driver)
     
-    # Verification
     assert "Welcome" in dashboard_page.get_welcome_message()
     assert dashboard_page.are_charts_visible()
     

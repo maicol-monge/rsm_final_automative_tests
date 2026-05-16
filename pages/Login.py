@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 class LoginPage:
     def __init__(self, driver):
         self.driver = driver
-        self.url = "https://localhost:7274"  # Update with your actual URL
+        self.url = "https://localhost:7274" 
         self.email_input = (By.ID, "Email")
         self.password_input = (By.ID, "Password")
         self.login_button = (By.CSS_SELECTOR, "button[type='submit']")

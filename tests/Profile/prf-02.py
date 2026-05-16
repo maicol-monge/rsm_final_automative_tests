@@ -38,7 +38,6 @@ def test_upload_valid_profile_picture():
     success_message = profile_page.get_success_message()
     assert "Your profile has been updated successfully!" in success_message
     
-    # Clean up the created file
     if os.path.exists(image_path):
         os.remove(image_path)
         
