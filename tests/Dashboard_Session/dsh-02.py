@@ -17,7 +17,6 @@ def test_dashboard_for_new_user():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
     try:
-        # Precondition: Register a new user
         register_page = RegisterPage(driver)
         new_email = generate_random_email()
         register_page.open_register_page()
@@ -31,7 +30,6 @@ def test_dashboard_for_new_user():
 
         wait = WebDriverWait(driver, 10)
 
-        # Login as the new user
         login_page = LoginPage(driver)
         login_page.open_login_page()
         login_page.enter_email(new_email)
@@ -40,10 +38,8 @@ def test_dashboard_for_new_user():
 
         wait.until(EC.url_contains("/Users/Dashboard"))
 
-        # Verification
         dashboard_page = DashboardPage(driver)
         assert "Welcome, New User" in dashboard_page.get_welcome_message()
         assert dashboard_page.are_charts_visible()
-        # Further checks could be done on chart data if accessible, e.g., via API or JS variables
     finally:
         driver.quit()
