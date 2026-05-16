@@ -15,8 +15,8 @@ def test_upload_valid_profile_picture():
     
     login_page = LoginPage(driver)
     login_page.open_login_page()
-    login_page.enter_email("mjosuemonge23@gmail.com")
-    login_page.enter_password("Hola123$")
+    login_page.enter_email("user@example.com")
+    login_page.enter_password("Password123!")
     login_page.click_login_button()
 
     wait = WebDriverWait(driver, 10)
